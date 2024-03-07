@@ -1,4 +1,6 @@
 const express = require("express");
+const bcrypt = require("bcrypt-nodejs");
+const cors = require('cors');
 
 const app = express();
 const port = 3500;
@@ -6,6 +8,7 @@ const port = 3500;
 //parser
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(cors());
 
 const database = {
   users: [
@@ -26,6 +29,13 @@ const database = {
       joined: new Date(),
     },
   ],
+  login: [
+    {
+      id: "741",
+      hash: "",
+      email: "johnhowieson@gmail.com",
+    },
+  ],
 };
 
 app.get("/", (req, res) => {
@@ -34,8 +44,8 @@ app.get("/", (req, res) => {
 
 app.post("/signin", (req, res) => {
   if (
-    req.body.email === database.users[1].email &&
-    req.body.password === database.users[1].password
+    req.body.email === database.users[0].email &&
+    req.body.password === database.users[0].password
   ) {
     res.json("success");
   } else {
@@ -89,16 +99,10 @@ app.post("/image", (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  console.log(`listening on port ${port}`);
 });
 
-/*
-first draft for the project and needed endpoints
-
-/signin => POST response with success/fail
-/register => POST user
-/profile/:userId => GET = user (with his informations)
-/image => PUT (updating the score) 
-
-
- */
+//bcrypt
+bcrypt.hash("bacon", null, null, function (err, hash) {
+  // Store hash in your password DB.
+});
