@@ -47,7 +47,7 @@ app.post("/signin", (req, res) => {
     req.body.email === database.users[0].email &&
     req.body.password === database.users[0].password
   ) {
-    res.json("success");
+    res.json(database.users[0]);
   } else {
     res.status(400).json("error logging in");
   }
@@ -55,18 +55,26 @@ app.post("/signin", (req, res) => {
 
 app.post("/register", (req, res) => {
   const { email, password, name } = req.body;
-  database.users.push({
-    id: "125",
-    name: name,
-    email: email,
-    password: password,
-    entries: 0,
-    joined: new Date(),
+
+  // bcrypt to hash the password
+  // bcrypt.hash(password, null, null, function (err, hash) {
+  //   if (err) {
+  //     return res.status(500).json("Error hashing the password");
+  //   }
+
+    // to stock the user in the db with the hashed password
+    database.users.push({
+      id: "125",
+      name: name,
+      email: email, 
+      entries: 0,
+      joined: new Date(),
+    });
+
+    // to return the last new user
+    res.json(database.users[database.users.length - 1]);
   });
 
-  //to avoid a long loading it is important herer not to forget to return and have the response
-  res.json(database.users[database.users.length - 1]);
-});
 
 //get the profile for the homepage
 app.get("/profile/:id", (req, res) => {
@@ -83,7 +91,7 @@ app.get("/profile/:id", (req, res) => {
   }
 });
 
-app.post("/image", (req, res) => {
+app.put("/image", (req, res) => {
   const { id } = req.body;
   let found = false;
   database.users.forEach((user) => {
@@ -103,6 +111,6 @@ app.listen(port, () => {
 });
 
 //bcrypt
-bcrypt.hash("bacon", null, null, function (err, hash) {
-  // Store hash in your password DB.
-});
+// bcrypt.hash("bacon", null, null, function (err, hash) {
+
+// });
