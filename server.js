@@ -77,7 +77,10 @@ app.post("/signin", (req, res) => {
 
 app.post("/register", (req, res) => {
   const { email, password, name } = req.body;
-
+  const hash = bcrypt.hashSync(password);
+  db.transaction((trx) => {
+    //here a transaction is important to ensure that the process is okay and in case of failure we go back
+  });
   db("users")
     .returning("*") //in the knex docs returning feature allows us to easily send the response
     .insert({
@@ -116,8 +119,8 @@ app.put("/image", (req, res) => {
     .returning("entries")
     .then((entries) => {
       res.json(entries[0].entries);
-    })
-    .catch((err) => res.status(400).json("unable to get count"));
+    });
+  // .catch((err) => res.status(400).json("unable to get count"));
 });
 
 app.listen(port, () => {
