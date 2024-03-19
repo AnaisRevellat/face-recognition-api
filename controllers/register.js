@@ -1,5 +1,8 @@
 const handleRegister = (req, res, db, bcrypt) => {
   const { email, password, name } = req.body;
+  if (!email || !password || !name) {
+    return res.status(400).json('incorrect form submission');
+  }
   const hash = bcrypt.hashSync(password);
   db.transaction((trx) => {
     //here a transaction is important to ensure that the process is okay and in case of failure we go back
@@ -28,5 +31,5 @@ const handleRegister = (req, res, db, bcrypt) => {
 };
 
 module.exports = {
-  handleRegister
+  handleRegister,
 };

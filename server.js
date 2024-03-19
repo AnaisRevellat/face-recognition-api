@@ -41,7 +41,7 @@ app.get("/", (req, res) => {
   res.send("home success");
 });
 
-app.post("/signin", signin.handleSignin(db, bcrypt)(req, res));
+app.post("/signin", (req, res) => {signin.handleSignin(req, res, db, bcrypt);});
 
 app.post("/register", (req, res) => {
   register.handleRegister(req, res, db, bcrypt);
@@ -52,7 +52,7 @@ app.get("/profile/:id", (req, res) => {
 });
 
 app.put("/image", (req, res) => {
-  image.handleImage(req, res, db);
+  image.handleImage(req, res, db);  
 });
 
 app.listen(port, () => {
