@@ -32,34 +32,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cors());
 
-const database = {
-  users: [
-    {
-      id: "123",
-      name: "John",
-      email: "johnhowieson@gmail.com",
-      password: "cookies",
-      entries: 0,
-      joined: new Date(),
-    },
-    {
-      id: "124",
-      name: "Velka",
-      email: "velkawolf@gmail.com",
-      password: "matcha",
-      entries: 0,
-      joined: new Date(),
-    },
-  ],
-  login: [
-    {
-      id: "741",
-      hash: "",
-      email: "johnhowieson@gmail.com",
-    },
-  ],
-};
-
 app.get("/", (req, res) => {
   res.send(database.users);
 });
@@ -71,16 +43,19 @@ app.post("/signin", (req, res) => {
     .then((data) => {
       const isValid = bcrypt.compareSync(req.body.password, data[0].hash);
       if (isValid) {
-        db.select("*")
+        return db
+          .select("*")
           .from("users")
           .where("email", "=", req.body.email)
           .then((user) => {
             res.json(user[0]);
           })
           .catch((err) => res.status(400).json("unable to get user"));
+      } else {
+        res.status(400).json("wrong credentials");
       }
     })
-    .catch((err) => res.status(400).json('wrong credentials'));
+    .catch((err) => res.status(400).json("wrong credentials"));
 });
 
 app.post("/register", (req, res) => {
