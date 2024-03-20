@@ -9,10 +9,11 @@ import cors from "cors";
 import knex from "knex";
 import 'dotenv/config';
 
-import * as register from "./controllers/register.js";
-import * as signin from "./controllers/signin.js";
-import * as profile from "./controllers/profile.js";
+import handleRegister from "./controllers/register.js"; 
+import handleSignin from "./controllers/signin.js"; 
+import handleProfileGet from "./controllers/profile.js";
 import * as image from "./controllers/image.js";
+
 
 /*knex to link the db*/
 
@@ -50,14 +51,16 @@ app.get("/", (req, res) => {
   res.send("home success");
 });
 
-app.post("/signin", (req, res) => {signin.handleSignin(req, res, db, bcrypt);});
+app.post("/signin", (req, res) => {
+  handleSignin(req, res, db, bcrypt); 
+}); 
 
 app.post("/register", (req, res) => {
-  register.default(req, res, db, bcrypt);
+  handleRegister(req, res, db, bcrypt); 
 }); //dependencies injections
 
 app.get("/profile/:id", (req, res) => {
-  profile.handleProfileGet(req, res, db);
+  handleProfileGet(req, res, db);
 });
 
 app.put("/image", (req, res) => {
