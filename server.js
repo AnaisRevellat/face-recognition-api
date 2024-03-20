@@ -8,10 +8,10 @@ const knex = require("knex");
 // const profile = require("./controllers/profile");
 // const image = require("./controllers/image");
 
-import * as register from "./controllers/register";
-import * as signin from "./controllers/signin";
-import * as profile from "./controllers/profile";
-import * as image from "./controllers/image";
+import * as register from "./controllers/register.js";
+import * as signin from "./controllers/signin.js";
+import * as profile from "./controllers/profile.js";
+import * as image from "./controllers/image.js";
 
 /*knex to link the db*/
 
