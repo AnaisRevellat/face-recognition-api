@@ -7,11 +7,7 @@ import express from "express";
 import bcrypt from "bcrypt-nodejs";
 import cors from "cors";
 import knex from "knex";
-
-// const register = require("./controllers/register");
-// const signin = require("./controllers/signin");
-// const profile = require("./controllers/profile");
-// const image = require("./controllers/image");
+import 'dotenv/config';
 
 import * as register from "./controllers/register.js";
 import * as signin from "./controllers/signin.js";
@@ -23,11 +19,13 @@ import * as image from "./controllers/image.js";
 const db = knex({
   client: "pg",
   connection: {
-    host: "127.0.0.1", 
+    connectionString: process.env.DATABASE_URL,
+    ssl: { rejectUnauthorized: false},
+    host: process.env.DATABASE_HOST, 
     port: 5432,
-    user: "postgres",
-    password: "gianni777",
-    database: "recognition_app",
+    user: process.env.DATABASE_USER,
+    password: process.env.DATABASE_PASSWORD,
+    database: process.env.DATABASE_DB,
   },
 });
 

@@ -25,9 +25,4 @@ const handleImage = (req, res, db) => {
   // .catch((err) => res.status(400).json("unable to get count"));
 };
 
-// module.exports = {
-//   handleImage,
-//   handleApiCall,
-// };
-
 export { handleImage, handleApiCall };
