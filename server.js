@@ -53,7 +53,7 @@ app.get("/", (req, res) => {
 app.post("/signin", (req, res) => {signin.handleSignin(req, res, db, bcrypt);});
 
 app.post("/register", (req, res) => {
-  register.handleRegister(req, res, db, bcrypt);
+  register.default(req, res, db, bcrypt);
 }); //dependencies injections
 
 app.get("/profile/:id", (req, res) => {
