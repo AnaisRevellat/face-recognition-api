@@ -3,11 +3,17 @@ const bcrypt = require("bcrypt-nodejs");
 const cors = require("cors");
 const knex = require("knex");
 
-const register = require("./controllers/register");
-const signin = require("./controllers/signin");
-const profile = require("./controllers/profile");
-const image = require("./controllers/image");
-//knex to link the db
+// const register = require("./controllers/register");
+// const signin = require("./controllers/signin");
+// const profile = require("./controllers/profile");
+// const image = require("./controllers/image");
+
+import * as register from "./controllers/register";
+import * as signin from "./controllers/signin";
+import * as profile from "./controllers/profile";
+import * as image from "./controllers/image";
+
+/*knex to link the db*/
 
 const db = knex({
   client: "pg",
@@ -53,6 +59,10 @@ app.get("/profile/:id", (req, res) => {
 
 app.put("/image", (req, res) => {
   image.handleImage(req, res, db);  
+});
+
+app.post("/imageurl", (req, res) => {
+  image.handleApiCall(req, res);  
 });
 
 app.listen(port, () => {
